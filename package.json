@@ -1,0 +1,26 @@
+{
+  "name": "webproject",
+  "version": "1.0.0",
+  "description": "",
+  "main": "connect_db.js",
+  "directories": {
+    "test": "test"
+  },
+  "dependencies": {
+    "pg": "^8.2.1"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "node connect_db.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/yani-eniz/WebProject.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/yani-eniz/WebProject/issues"
+  },
+  "homepage": "https://github.com/yani-eniz/WebProject#readme"
+}

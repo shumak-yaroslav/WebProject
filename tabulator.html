@@ -4,18 +4,18 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    
     <link href="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.1/css/tabulator.min.css" rel="stylesheet">
     <link href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
     <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/js/bootstrap.min.js" integrity="sha384-OgVRvuATP1z7JjHLkuOU7Xw704+h835Lr+6QL9UvYjZE3Ipu6Tp75j7Bh/kR0JKI" crossorigin="anonymous"></script>
+    <script src="/connect_db.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/tabulator/4.1.1/js/tabulator.min.js"></script>
-    
+    <script src="/tabulator.js"></script>
     <title>Tabulator</title>
 </head>
 <body style="background-color: #1e1e2d;">
     <div id="example-table" style="margin-top: 50px"></div>
     <div>
-        <button id="ajax-trigger" style="font-weight: 900;
+        <button id="ajax-trigger" onclick="test()" style="font-weight: 900;
         font-size: 14px;
         text-align: center;
         color: #fff;
@@ -33,13 +33,156 @@
         outline: none;
         transform: translate(-50%, 0)">Load Data</button>
     </div>
+
+    <div>
+        <button id="ajax-trigger" onclick="updateData()" style="font-weight: 900;
+        font-size: 14px;
+        text-align: center;
+        color: #fff;
+        border-radius: 25px;
+        width: 200px;
+        padding: 10px;
+        display: block;
+        margin: 10px;
+        margin-top: 50px;
+        text-transform: uppercase;
+        background-color: #F6232C;
+        border: none;
+        position:relative;
+        left: 50%;
+        outline: none;
+        transform: translate(-50%, 0)">Update data</button>
+    </div>
+
+    <form style="padding: 100px;">
+        <label for="fname" style="color: #fff;">AppKey:</label><br>
+        <input type="text" id="appKey" name="fname" placeholder="AppKey"><br>
+        <label for="fname" style="color: #fff;">AppSecret:</label><br>
+        <input type="text" id="appSecret" name="fname" placeholder="AppSecret"><br>
+        <label for="fname" style="color: #fff;">ProductSellerCode:</label><br>
+        <input type="text" id="productSellerCode" name="fname" placeholder="ProductSellerCode"><br>
+        <label for="fname" style="color: #fff;">Title:</label><br>
+        <input type="text" id="title" name="fname" placeholder="Title"><br>
+        <label for="fname" style="color: #fff;">Subtitle:</label><br>
+        <input type="text" id="subtitle" name="fname" placeholder="Subtitle"><br>
+        <label for="fname" style="color: #fff;">Description:</label><br>
+        <input type="text" id="description" name="fname" placeholder="Description"><br>
+        <label for="fname" style="color: #fff;">Domestic:</label><br>
+        <input type="text" id="domestic" name="fname" placeholder="Domestic"><br>
+        <label for="fname" style="color: #fff;">Category_id:</label><br>
+        <input type="text" id="category_id" name="fname" placeholder="Category_id"><br>
+        <label for="fname" style="color: #fff;">SpecialProductInfo_key1:</label><br>
+        <input type="text" id="specialProductInfo_key1" name="fname" placeholder="SpecialProductInfo_key1"><br>
+        <label for="fname" style="color: #fff;">SpecialProductInfo_value1:</label><br>
+        <input type="text" id="specialProductInfo_value1" name="fname" placeholder="SpecialProductInfo_value1"><br>
+        <label for="fname" style="color: #fff;">Price:</label><br>
+        <input type="text" id="price" name="fname" placeholder="Price"><br>
+        <label for="fname" style="color: #fff;">CurrencyType:</label><br>
+        <input type="text" id="currencyType" name="fname" placeholder="CurrencyType"><br>
+        <label for="fname" style="color: #fff;">Image_url1:</label><br>
+        <input type="text" id="image_url1" name="fname" placeholder="Image_url1"><br>
+        <label for="fname" style="color: #fff;">Image_order1:</label><br>
+        <input type="text" id="image_order1" name="fname" placeholder="Image_order1"><br>
+        <label for="fname" style="color: #fff;">ApprovalStatus:</label><br>
+        <input type="text" id="approvalStatus" name="fname" placeholder="ApprovalStatus"><br>
+        <label for="fname" style="color: #fff;">GroupAttribute:</label><br>
+        <input type="text" id="groupAttribute" name="fname" placeholder="GroupAttribute"><br>
+        <label for="fname" style="color: #fff;">GroupItemCode:</label><br>
+        <input type="text" id="groupItemCode" name="fname" placeholder="GroupItemCode"><br>
+        <label for="fname" style="color: #fff;">ItemName:</label><br>
+        <input type="text" id="itemName" name="fname" placeholder="ItemName"><br>
+        <label for="fname" style="color: #fff;">Attribute_name1:</label><br>
+        <input type="text" id="attribute_name1" name="fname" placeholder="Attribute_name1"><br>
+        <label for="fname" style="color: #fff;">Attribute_value1:</label><br>
+        <input type="text" id="attribute_value1" name="fname" placeholder="Attribute_value1"><br>
+        <label for="fname" style="color: #fff;">SaleStartDate:</label><br>
+        <input type="text" id="saleStartDate" name="fname" placeholder="SaleStartDate"><br>
+        <label for="fname" style="color: #fff;">SaleEndDate:</label><br>
+        <input type="text" id="saleEndDate" name="fname" placeholder="SaleEndDate"><br>
+        <label for="fname" style="color: #fff;">ProductionDate:</label><br>
+        <input type="text" id="productionDate" name="fname" placeholder="ProductionDate"><br>
+        <label for="fname" style="color: #fff;">ExpirationDate:</label><br>
+        <input type="text" id="expirationDate" name="fname" placeholder="ExpirationDate"><br>
+        <label for="fname" style="color: #fff;">ProductCondition:</label><br>
+        <input type="text" id="productCondition" name="fname" placeholder="ProductCondition"><br>
+        <label for="fname" style="color: #fff;">PreparingDay:</label><br>
+        <input type="text" id="preparingDay" name="fname" placeholder="PreparingDay"><br>
+        <label for="fname" style="color: #fff;">Discount_startDate:</label><br>
+        <input type="text" id="discount_startDate" name="fname" placeholder="Discount_startDate"><br>
+        <label for="fname" style="color: #fff;">Discount_endDate:</label><br>
+        <input type="text" id="discount_endDate" name="fname" placeholder="Discount_endDate"><br>
+        <label for="fname" style="color: #fff;">Discount_type:</label><br>
+        <input type="text" id="discount_type" name="fname" placeholder="Discount_type"><br>
+        <label for="fname" style="color: #fff;">StockItem_bundle1:</label><br>
+        <input type="text" id="stockItem_bundle1" name="fname" placeholder="StockItem_bundle1"><br>
+        <label for="fname" style="color: #fff;">StockItem_mpn1:</label><br>
+        <input type="text" id="stockItem_mpn1" name="fname" placeholder="StockItem_mpn1"><br>
+        <label for="fname" style="color: #fff;">StockItem_gtin1:</label><br>
+        <input type="text" id="stockItem_gtin1" name="fname" placeholder="StockItem_gtin1"><br>
+        <label for="fname" style="color: #fff;">StockItem_n11CatalogId1:</label><br>
+        <input type="text" id="stockItem_n11CatalogId1" name="fname" placeholder="StockItem_n11CatalogId1"><br>
+        <label for="fname" style="color: #fff;">StockItem_oem1:</label><br>
+        <input type="text" id="stockItem_oem1" name="fname" placeholder="StockItem_oem1"><br>
+        <label for="fname" style="color: #fff;">StockItem_quantity1:</label><br>
+        <input type="text" id="stockItem_quantity1" name="fname" placeholder="StockItem_quantity1"><br>
+        <label for="fname" style="color: #fff;">StockItem_sellerStockCode1:</label><br>
+        <input type="text" id="stockItem_sellerStockCode1" name="fname" placeholder="StockItem_sellerStockCode1"><br>
+        <label for="fname" style="color: #fff;">StockItem_attribute_name1:</label><br>
+        <input type="text" id="stockItem_attribute_name1" name="fname" placeholder="StockItem_attribute_name1"><br>
+        <label for="fname" style="color: #fff;">StockItem_attribute_value1:</label><br>
+        <input type="text" id="stockItem_attribute_value1" name="fname" placeholder="StockItem_attribute_value1"><br>
+        <label for="fname" style="color: #fff;">StockItem_optionPrice1:</label><br>
+        <input type="text" id="stockItem_optionPrice1" name="fname" placeholder="StockItem_optionPrice1"><br>
+        <label for="fname" style="color: #fff;">UnitType:</label><br>
+        <input type="text" id="unitType" name="fname" placeholder="UnitType"><br>
+        <label for="fname" style="color: #fff;">UnitWeight:</label><br>
+        <input type="text" id="unitWeight" name="fname" placeholder="UnitWeight"><br>
+      </form>
+
+      <button id="ajax-trigger" onclick="revObject()" style="font-weight: 900;
+        font-size: 14px;
+        text-align: center;
+        color: #fff;
+        border-radius: 25px;
+        width: 200px;
+        padding: 10px;
+        display: block;
+        margin: 10px;
+        margin-top: 50px;
+        text-transform: uppercase;
+        background-color: #F6232C;
+        border: none;
+        position:relative;
+        left: 50%;
+        outline: none;
+        transform: translate(-50%, 0)">Reverse</button>
 </body>
 
+
 <script>
+
+let JSONfile;
+let sel_row;
+let val = [];
+let keys = ["appKey","appSecret","productSellerCode","title","subtitle","description","domestic","category_id","specialProductInfo_key1","specialProductInfo_value1","price","currencyType",
+"image_url1","image_order1","approvalStatus","groupAttribute","groupItemCode","itemName","attribute_name1","attribute_value1","saleStartDate","saleEndDate","productionDate","expirationDate","productCondition",
+"preparingDay","discount_startDate","discount_endDate","discount_type","stockItem_bundle1","stockItem_mpn1","stockItem_gtin1","stockItem_n11CatalogId1","stockItem_oem1","stockItem_quantity1","stockItem_sellerStockCode1",
+"stockItem_attribute_name1","stockItem_attribute_value1","stockItem_optionPrice1","unitType","unitWeight"];
+let l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,l40,l41;
 
 //Build Tabulator
 var table = new Tabulator("#example-table", {
     height:"311px",
+    rowClick:function(e, row){
+    row.toggleSelect(); //toggle row selected state on row click
+    sel_row = row;
+    console.log(sel_row._row.data);
+    for(k in sel_row._row.data){
+    for(let i = 0;i<=keys.length -1;i++){
+    document.getElementById(keys[i]).value = sel_row._row.data[keys[i]];
+}
+}
+},
     layout:"fitColumns",
     placeholder:"No Data Set",
     columns:[
@@ -84,73 +227,244 @@ var table = new Tabulator("#example-table", {
         {title:"stockItem_optionPrice1", field:"stockItem_optionPrice1", sorter:"string"},
         {title:"unitType", field:"unitType", sorter:"string"},
         {title:"unitWeight", field:"unitWeight", sorter:"string"},
+        {title:"JSON", field:"JSON", sorter:"string"},
     ],
 });
 
-
-// GLOABAL VARIABLES
-var BASE_URL = "https://raw.githubusercontent.com/yani-eniz/WebProject/master/urls.json";
-var GLOBA_AUTH_KEY = "cm9vdDpwYmhiYXI=";
-
-function alertMsg() {
-    window.alert("Test message");
-  }
-
-function test_user_ws(){
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
-
-    xhr.addEventListener("readystatechange", function() {
-        if(this.readyState === 4) {
-        console.log(this.responseText);
-            }
-    });
-
-    xhr.open("GET", "user");
-    xhr.setRequestHeader("Authorization", "Basic cm9vdDpwYmhiYXI=");
-
-    xhr.send();
-    window.alert();
-  }
+async function test() {
+            let url = 'http://localhost:3000/products';
+            let response = await fetch(url);
+            let commits = JSONfile = await response.json(); // читаем ответ в формате JSON
+            table.setData(commits);
+            console.log(commits);
+}
 
 
-  // This is generic vps_http_get ?? why did you add this :(
-  function vps_http_get(auth, url){
+function updateData(){
+let obj = {};
 
-    var xhr = new XMLHttpRequest();
-    xhr.withCredentials = true;
+l1 = document.getElementById('appKey').value;
+l2 = document.getElementById('appSecret').value;
+l3 = document.getElementById('productSellerCode').value;
+l4 = document.getElementById('title').value;
+l5 = document.getElementById('subtitle').value;
+l6 = document.getElementById('description').value;
+l7 = document.getElementById('domestic').value;
+l8 = document.getElementById('category_id').value;
+l9 = document.getElementById('specialProductInfo_key1').value;
+l10 = document.getElementById('specialProductInfo_value1').value;
+l11 = document.getElementById('price').value;
+l12 = document.getElementById('currencyType').value;
+l13 = document.getElementById('image_url1').value;
+l14 = document.getElementById('image_order1').value;
+l15 = document.getElementById('approvalStatus').value;
+l16 = document.getElementById('groupAttribute').value;
+l17 = document.getElementById('groupItemCode').value;
+l18 = document.getElementById('itemName').value;
+l19 = document.getElementById('attribute_name1').value;
+l20 = document.getElementById('attribute_value1').value;
+l21 = document.getElementById('saleStartDate').value;
+l22 = document.getElementById('saleEndDate').value;
+l23 = document.getElementById('productionDate').value;
+l24 = document.getElementById('expirationDate').value;
+l25 = document.getElementById('productCondition').value;
+l26 = document.getElementById('preparingDay').value;
+l27 = document.getElementById('discount_startDate').value;
+l28 = document.getElementById('discount_endDate').value;
+l29 = document.getElementById('discount_type').value;
+l30 = document.getElementById('stockItem_bundle1').value;
+l31 = document.getElementById('stockItem_mpn1').value;
+l32 = document.getElementById('stockItem_gtin1').value;
+l33 = document.getElementById('stockItem_n11CatalogId1').value;
+l34 = document.getElementById('stockItem_oem1').value;
+l35 = document.getElementById('stockItem_quantity1').value;
+l36 = document.getElementById('stockItem_sellerStockCode1').value;
+l37 = document.getElementById('stockItem_attribute_name1').value;
+l38 = document.getElementById('stockItem_attribute_value1').value;
+l39 = document.getElementById('stockItem_optionPrice1').value;
+l40 = document.getElementById('unitType').value;
+l41 = document.getElementById('unitWeight').value;
 
-    xhr.addEventListener("readystatechange", function()  {
-        if(this.readyState === 4) {
-          console.log(this.responseText);
-          var resultText = xhr.responseText;
-          //window.alert(resultText);
-          table.setData(resultText);
-        }
-    })
+val.push(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,l40,l41);
 
-    xhr.open("GET", url);
-    xhr.setRequestHeader("Authorization", "Basic " + auth);
+for (let i = 0; i <= keys.length -1; i++) {
+obj[keys[i]] = val[i];
+}
 
-    xhr.send();
+console.log(obj);
 
-  }
+sel_row.update(obj);
 
-  // Our functions 
-  // Users
-  // LIST USERS
-  function vps_http_get_users(){
+}
+// function test1() {
+//             let arr = [];
+//             const {Client} = require('pg')
+//             const client = new Client({
+//                 user: "admin",
+//                 password: "23112006",
+//                 host: "localhost",
+//                 port: 5432,
+//                 database: "ProductsTable"
+//             })
 
-    var our_url = BASE_URL + "user";
-    vps_http_get(GLOBA_AUTH_KEY, our_url);
+//             client.connect()
+//             .then(() => console.log("Connected successfuly"))
+//             .then(() => client.query("select * from products"))
+//             .then(results => arr.push(results.rows))
+//             .then(() => table.setData(arr))
+//             .then(() => console.log(arr))
+//             .catch(e => console.log(e))
+//             .finally(() => client.end())
+// }
+
+
+function revObject(){
+let obj = {};
+
+let l1 = document.getElementById('appKey').value;
+let l2 = document.getElementById('appSecret').value;
+let l3 = document.getElementById('productSellerCode').value;
+let l4 = document.getElementById('title').value;
+let l5 = document.getElementById('subtitle').value;
+let l6 = document.getElementById('description').value;
+let l7 = document.getElementById('domestic').value;
+let l8 = document.getElementById('category_id').value;
+let l9 = document.getElementById('specialProductInfo_key1').value;
+let l10 = document.getElementById('specialProductInfo_value1').value;
+let l11 = document.getElementById('price').value;
+let l12 = document.getElementById('currencyType').value;
+let l13 = document.getElementById('image_url1').value;
+let l14 = document.getElementById('image_order1').value;
+let l15 = document.getElementById('approvalStatus').value;
+let l16 = document.getElementById('groupAttribute').value;
+let l17 = document.getElementById('groupItemCode').value;
+let l18 = document.getElementById('itemName').value;
+let l19 = document.getElementById('attribute_name1').value;
+let l20 = document.getElementById('attribute_value1').value;
+let l21 = document.getElementById('saleStartDate').value;
+let l22 = document.getElementById('saleEndDate').value;
+let l23 = document.getElementById('productionDate').value;
+let l24 = document.getElementById('expirationDate').value;
+let l25 = document.getElementById('productCondition').value;
+let l26 = document.getElementById('preparingDay').value;
+let l27 = document.getElementById('discount_startDate').value;
+let l28 = document.getElementById('discount_endDate').value;
+let l29 = document.getElementById('discount_type').value;
+let l30 = document.getElementById('stockItem_bundle1').value;
+let l31 = document.getElementById('stockItem_mpn1').value;
+let l32 = document.getElementById('stockItem_gtin1').value;
+let l33 = document.getElementById('stockItem_n11CatalogId1').value;
+let l34 = document.getElementById('stockItem_oem1').value;
+let l35 = document.getElementById('stockItem_quantity1').value;
+let l36 = document.getElementById('stockItem_sellerStockCode1').value;
+let l37 = document.getElementById('stockItem_attribute_name1').value;
+let l38 = document.getElementById('stockItem_attribute_value1').value;
+let l39 = document.getElementById('stockItem_optionPrice1').value;
+let l40 = document.getElementById('unitType').value;
+let l41 = document.getElementById('unitWeight').value;
+
+
+let keys = ["appKey","appSecret","productSellerCode","title","subtitle","description","domestic","category_id","specialProductInfo_key1","specialProductInfo_value1","price","currencyType",
+"image_url1","image_order1","approvalStatus","groupAttribute","groupItemCode","itemName","attribute_name1","attribute_value1","saleStartDate","saleEndDate","productionDate","expirationDate","productCondition",
+"preparingDay","discount_startDate","discount_endDate","discount_type","stockItem_bundle1","stockItem_mpn1","stockItem_gtin1","stockItem_n11CatalogId1","stockItem_oem1","stockItem_quantity1","stockItem_sellerStockCode1",
+"stockItem_attribute_name1","stockItem_attribute_value1","stockItem_optionPrice1","unitType","unitWeight"];
+let values = [];
+values.push(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,l40,l41);
+
+for (let i = 0; i <= keys.length - 1; i++) {
+obj[keys[i]] = values[i];
+}
+
+console.log(obj);
+
+var myHeaders = new Headers();
+myHeaders.append("Content-Type", "application/json");
+
+var raw = JSON.stringify([obj]);
+
+var requestOptions = {
+method: 'POST',
+headers: myHeaders,
+body: raw,
+redirect: 'follow'
+};
+
+fetch("http://localhost:3000/products", requestOptions)
+.then(response => response.text())
+.then(result => console.log(result))
+.catch(error => console.log('error', error));
+
+}
+
+
+
+
+
+    
+
+// // GLOABAL VARIABLES
+// var BASE_URL = "https://raw.githubusercontent.com/yani-eniz/WebProject/master/urls.json";
+// var GLOBA_AUTH_KEY = "cm9vdDpwYmhiYXI=";
+
+// function alertMsg() {
+//     window.alert("Test message");
+//   }
+
+// function test_user_ws(){
+//     var xhr = new XMLHttpRequest();
+//     xhr.withCredentials = true;
+
+//     xhr.addEventListener("readystatechange", function() {
+//         if(this.readyState === 4) {
+//         console.log(this.responseText);
+//             }
+//     });
+
+//     xhr.open("GET", "user");
+//     xhr.setRequestHeader("Authorization", "Basic cm9vdDpwYmhiYXI=");
+
+//     xhr.send();
+//     window.alert();
+//   }
+
+
+//   // This is generic vps_http_get ?? why did you add this :(
+//   function vps_http_get(auth, url){
+
+//     var xhr = new XMLHttpRequest();
+//     xhr.withCredentials = true;
+
+//     xhr.addEventListener("readystatechange", function()  {
+//         if(this.readyState === 4) {
+//           console.log(this.responseText);
+//           var resultText = xhr.responseText;
+//           //window.alert(resultText);
+//           table.setData(resultText);
+//         }
+//     })
+
+//     xhr.open("GET", url);
+//     xhr.setRequestHeader("Authorization", "Basic " + auth);
+
+//     xhr.send();
+
+//   }
+
+//   // Our functions 
+//   // Users
+//   // LIST USERS
+//   function vps_http_get_users(){
+
+//     var our_url = BASE_URL + "user";
+//     vps_http_get(GLOBA_AUTH_KEY, our_url);
   
-  }
+//   }
 
 
-//trigger AJAX load on "Load Data via AJAX" button click
-document.getElementById("ajax-trigger").addEventListener("click", function(){
-    console.log("Setting data to table..");
-    vps_http_get_users();
-});
+// //trigger AJAX load on "Load Data via AJAX" button click
+// document.getElementById("ajax-trigger").addEventListener("click", function(){
+//     console.log("Setting data to table..");
+//     vps_http_get_users();
+// });
 </script>
 </html>

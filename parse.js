@@ -1,11 +1,6 @@
-var requestURL = 'https://raw.githubusercontent.com/yani-eniz/WebProject/master/urls.json';
-var request = new XMLHttpRequest();
-request.open('GET', requestURL);
-request.responseType = 'json';
-request.send();
+let url = 'https://api.github.com/repos/javascript-tutorial/en.javascript.info/commits';
+let response = await fetch(url);
 
-request.onload = function() {
-    var superHeroes = request.response;
-    populateHeader(superHeroes);
-    showHeroes(superHeroes);
-  }
+let commits = await response.json(); // читаем ответ в формате JSON
+
+alert(commits[0].author.login);
