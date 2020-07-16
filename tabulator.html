@@ -54,6 +54,66 @@
         transform: translate(-50%, 0)">Update data</button>
     </div>
 
+    <div>
+        <button id="ajax-trigger" onclick="deleteData()" style="font-weight: 900;
+        font-size: 14px;
+        text-align: center;
+        color: #fff;
+        border-radius: 25px;
+        width: 200px;
+        padding: 10px;
+        display: block;
+        margin: 10px;
+        margin-top: 50px;
+        text-transform: uppercase;
+        background-color: #F6232C;
+        border: none;
+        position:relative;
+        left: 50%;
+        outline: none;
+        transform: translate(-50%, 0)">Delete data</button>
+    </div>
+
+    <div>
+        <button id="ajax-trigger" onclick="updateAll()" style="font-weight: 900;
+        font-size: 14px;
+        text-align: center;
+        color: #fff;
+        border-radius: 25px;
+        width: 200px;
+        padding: 10px;
+        display: block;
+        margin: 10px;
+        margin-top: 50px;
+        text-transform: uppercase;
+        background-color: #F6232C;
+        border: none;
+        position:relative;
+        left: 50%;
+        outline: none;
+        transform: translate(-50%, 0)">Update all</button>
+    </div>
+
+    <div>
+        <button id="ajax-trigger" onclick="putJson()" style="font-weight: 900;
+        font-size: 14px;
+        text-align: center;
+        color: #fff;
+        border-radius: 25px;
+        width: 200px;
+        padding: 10px;
+        display: block;
+        margin: 10px;
+        margin-top: 50px;
+        text-transform: uppercase;
+        background-color: #F6232C;
+        border: none;
+        position:relative;
+        left: 50%;
+        outline: none;
+        transform: translate(-50%, 0)">Put JSON data</button>
+    </div>
+
     <form style="padding: 100px;">
         <label for="fname" style="color: #fff;">AppKey:</label><br>
         <input type="text" id="appKey" name="fname" placeholder="AppKey"><br>
@@ -161,6 +221,7 @@
 
 <script>
 
+let obj = {};
 let JSONfile;
 let sel_row;
 let val = [];
@@ -241,7 +302,7 @@ async function test() {
 
 
 function updateData(){
-let obj = {};
+let arr_raw = {};
 
 l1 = document.getElementById('appKey').value;
 l2 = document.getElementById('appSecret').value;
@@ -288,14 +349,46 @@ l41 = document.getElementById('unitWeight').value;
 val.push(l1,l2,l3,l4,l5,l6,l7,l8,l9,l10,l11,l12,l13,l14,l15,l16,l17,l18,l19,l20,l21,l22,l23,l24,l25,l26,l27,l28,l29,l30,l31,l32,l33,l34,l35,l36,l37,l38,l39,l40,l41);
 
 for (let i = 0; i <= keys.length -1; i++) {
-obj[keys[i]] = val[i];
+arr_raw[keys[i]] = val[i];
 }
 
-console.log(obj);
+console.log(arr_raw);
+sel_row.update(arr_raw);
 
-sel_row.update(obj);
+var data_last = table.getData();
+console.log(data_last);
+
+return data_last;
+
 
 }
+
+function putJson() {
+    let dataJson = updateData();
+    let new_arr = [];
+    for (let i = 0; i <= dataJson.length - 1; i++) {
+        for (const [key, value] of Object.entries(dataJson[i])) {
+            new_arr.push(`${key}: ${value}`);
+    }
+}
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify([{"JSON":new_arr}]);
+
+    var requestOptions = {
+        method: 'POST',
+        headers: myHeaders,
+        body: raw,
+        redirect: 'follow'
+};
+
+fetch("http://localhost:3000/products?", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .catch(error => console.log('error', error));
+}
+
 // function test1() {
 //             let arr = [];
 //             const {Client} = require('pg')
@@ -394,6 +487,47 @@ fetch("http://localhost:3000/products", requestOptions)
 .then(result => console.log(result))
 .catch(error => console.log('error', error));
 
+}
+
+function updateAll(){
+
+var myHeader = new Headers();
+myHeader.append("Content-Type", "application/json");
+
+let arr_all = JSON.stringify(updateData());
+
+var requestOptionss = {
+method: 'POST',
+headers: myHeader,
+body: arr_all,
+redirect: 'follow'
+};
+
+fetch("http://localhost:3000/products", requestOptionss)
+.then(response => response.text())
+.then(result => console.log(result))
+.catch(error => console.log('error', error));
+
+}
+
+function deleteData() {
+    var myHeaders = new Headers();
+    myHeaders.append("Content-Type", "application/json");
+
+    var raw = JSON.stringify([obj]);
+
+    var requestOptions = {
+    method: 'DELETE',
+    headers: myHeaders,
+    body: raw,
+    redirect: 'follow'
+    };
+
+    fetch("http://localhost:3000/products", requestOptions)
+    .then(response => response.text())
+    .then(result => console.log(result))
+    .then(JSONfile => console.log(JSONfile))
+    .catch(error => console.log('error', error));
 }
 
 
